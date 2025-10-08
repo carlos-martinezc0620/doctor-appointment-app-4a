@@ -4,13 +4,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::redirect('/', '/admin');
 //Route::get('/', function () {
-//return view('welcome');
+    //return view('welcome');
 //});
-use App\Http\Controllers\AdminController;
-
-Route::get('/admin', [AdminController::class, 'index'])
-    ->middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])
-    ->name('admin.dashboard');
 
 Route::middleware([
     'auth:sanctum',
