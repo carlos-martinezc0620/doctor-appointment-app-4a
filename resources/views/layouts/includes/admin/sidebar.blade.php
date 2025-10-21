@@ -8,7 +8,13 @@
             'active' => request()->routeIs('admin.dashboard'),
         ],
         [
-            'header' => 'Hospital',
+            'header' => 'Gestión',
+        ],
+         [
+            'name' => 'Roles y permisos',
+            'icon' => 'fa-solid fa-shield-halved',
+            'href' => route('admin.roles.index'),
+            'active' => request()->routeIs('admin.roles.*'),
         ],
     ];
 @endphp
@@ -58,6 +64,7 @@
                     <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">E-commerce</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
                          viewBox="0 0 10 6">
+
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                               stroke-width="2" d="m1 1 4 4 4-4" />
                     </svg>
