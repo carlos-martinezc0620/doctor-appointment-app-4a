@@ -4,62 +4,71 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class RoleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('admin.roles.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('admin.roles.create', [
+            'breadcrumbs' => [
+                ['name' => 'Dashboard', 'href' => route('admin.dashboard')],
+                ['name' => 'Roles', 'href' => route('admin.roles.index')],
+                ['name' => 'Nuevo Rol'],
+            ]
+        ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required|unique:roles,name'
+        ]);
+
+        Role::create([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('admin.roles.index')
+            ->with('success', 'Rol creado correctamente.');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function edit(Role $role)
     {
-        //
+        return view('admin.roles.edit', [
+            'role' => $role,
+            'breadcrumbs' => [
+                ['name' => 'Dashboard', 'href' => route('admin.dashboard')],
+                ['name' => 'Roles', 'href' => route('admin.roles.index')],
+                ['name' => 'Editar Rol'],
+            ]
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            'name' => "required|unique:roles,name,{$role->id}"
+        ]);
+
+        $role->update([
+            'name' => $request->name
+        ]);
+
+        return redirect()->route('admin.roles.index')
+            ->with('success', 'Rol actualizado correctamente.');
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function destroy(Role $role)
     {
-        //
-    }
+        $role->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return redirect()->route('admin.roles.index')
+            ->with('success', 'Rol eliminado correctamente.');
     }
 }

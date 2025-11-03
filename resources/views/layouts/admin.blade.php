@@ -1,7 +1,7 @@
 @props([
     'title' => config('app.name', 'Laravel'),
     'breadcrumbs' => [],
-    ])
+])
 
     <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ $title }}</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -28,14 +28,32 @@
 </head>
 <body class="font-sans antialiased bg-blue-50">
 
+{{-- Navbar y sidebar --}}
 @include('layouts.includes.admin.navigation')
 @include('layouts.includes.admin.sidebar')
 
+{{-- Contenido principal --}}
 <div class="p-4 sm:ml-64">
-    <div class="mt-14 flex items-center justify-between w-full">
-        @include('admin.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+
+    {{-- Encabezado con breadcrumbs y acción --}}
+    <div class="mt-14 flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-4">
+        {{-- Breadcrumbs --}}
+        <div>
+            @include('admin.breadcrumb', ['breadcrumbs' => $breadcrumbs])
+        </div>
+
+        {{-- Botón o acción (slot "action") --}}
+        @isset($action)
+            <div class="flex-shrink-0">
+                {{ $action }}
+            </div>
+        @endisset
     </div>
-    {{ $slot }}
+
+    {{-- Contenido de la vista --}}
+    <div class="mt-6">
+        {{ $slot }}
+    </div>
 </div>
 
 @stack('modals')
