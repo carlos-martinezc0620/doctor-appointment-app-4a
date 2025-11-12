@@ -77,6 +77,32 @@
     </script>
 @endif
 
+<script>
+    // Buscar todos los elementos con la clase "delete-form"
+    const forms = document.querySelectorAll('.delete-form');
+
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: "No podrás revertir esto.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+        });
+    });
+</script>
+
+
 @if (session('error'))
     <script>
         Swal.fire({
@@ -88,13 +114,16 @@
     </script>
 @endif
 
-@if (session('warning'))
+@if (session('swal'))
     <script>
-        Swal.fire({
-            icon: 'warning',
-            title: 'Advertencia',
-            text: "{{ session('warning') }}",
-            showConfirmButton: true,
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: '{{ session('swal.icon') }}',
+                title: '{{ session('swal.title') }}',
+                text: '{{ session('swal.text') }}',
+                showConfirmButton: true,
+                confirmButtonColor: '#3085d6'
+            });
         });
     </script>
 @endif
