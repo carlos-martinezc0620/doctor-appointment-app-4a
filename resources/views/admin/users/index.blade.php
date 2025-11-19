@@ -10,4 +10,5 @@
     </x-slot>
 
     <livewire:admin.datatables.user-table />
+
 </x-admin-layout>
