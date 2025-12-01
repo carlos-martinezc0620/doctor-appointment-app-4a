@@ -1,20 +1,31 @@
-<x-admin-layout :breadcrumbs="[
-    ['name' => 'Dashboard', 'href' => route('admin.dashboard')],
-    ['name' => 'Clases', 'href' => route('admin.classes.index')],
-    ['name' => 'Editar']
-]">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-    <h1 class="text-2xl font-semibold mb-6">Editar Clase</h1>
+    <div>
+        <x-input label="Nombre"
+                 name="name"
+                 value="{{ old('name', $trainer->name ?? '') }}"
+                 required />
+    </div>
 
-    <form action="{{ route('admin.classes.update', $class) }}" method="POST" class="space-y-4">
-        @csrf
-        @method('PUT')
+    <div>
+        <x-input label="Email"
+                 name="email"
+                 type="email"
+                 value="{{ old('email', $trainer->email ?? '') }}"
+                 required />
+    </div>
 
-        @include('admin.classes._form', ['class' => $class])
+    <div>
+        <x-input label="Teléfono"
+                 name="phone"
+                 value="{{ old('phone', $trainer->phone ?? '') }}" />
+    </div>
 
-        <x-wire-button blue type="submit">
-            Actualizar
-        </x-wire-button>
-    </form>
+    <div class="md:col-span-2">
+        <x-input label="Biografía"
+                 name="bio"
+                 type="textarea"
+                 value="{{ old('bio', $trainer->bio ?? '') }}" />
+    </div>
 
-</x-admin-layout>
+</div>

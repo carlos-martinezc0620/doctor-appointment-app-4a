@@ -11,7 +11,7 @@
         @include('admin.trainers._form')
 
         <x-wire-button blue type="submit">
-            Guardrar
+            Guardar
         </x-wire-button>
     </form>
 

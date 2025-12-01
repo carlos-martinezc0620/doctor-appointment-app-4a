@@ -10,9 +10,11 @@
         @csrf
         @include('admin.memberships._form')
 
-        <x-wire-button blue type="submit">
-            Guardar
-        </x-wire-button>
+        <div class="flex justify-end">
+            <x-wire-button blue type="submit">
+                Guardar
+            </x-wire-button>
+        </div>
     </form>
 
 </x-admin-layout>
