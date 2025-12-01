@@ -22,7 +22,26 @@
             'href' => route('admin.users.index'),
             'active' => request()->routeIs('admin.users.*'),
         ],
+        [
+            'name' => 'Membresías',
+            'icon' => 'fa-solid fa-id-card',
+            'href' => route('admin.memberships.index'),
+            'active' => request()->routeIs('admin.memberships.*'),
+        ],
 
+        [
+            'name' => 'Entrenadores',
+            'icon' => 'fa-solid fa-dumbbell',
+            'href' => route('admin.trainers.index'),
+            'active' => request()->routeIs('admin.trainers.*'),
+        ],
+
+        [
+            'name' => 'Clases',
+            'icon' => 'fa-solid fa-person-running',
+            'href' => route('admin.classes.index'),
+            'active' => request()->routeIs('admin.classes.*'),
+        ],
     ];
 @endphp
 
@@ -57,3 +76,5 @@
                 </li>
             @endforeach
 </aside>
+
+
