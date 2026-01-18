@@ -71,7 +71,7 @@
                     </div>
                 @endif
 
-                
+
             </div>
 
             <!-- Hamburger -->
@@ -126,7 +126,7 @@
                     @csrf
 
                     <x-responsive-nav-link href="{{ route('logout') }}"
-                                   @click.prevent="$root.submit();">
+                                           @click.prevent="$root.submit();">
                         {{ __('Log Out') }}
                     </x-responsive-nav-link>
                 </form>

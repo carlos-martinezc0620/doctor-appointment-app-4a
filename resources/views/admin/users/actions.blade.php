@@ -1,15 +1,13 @@
-<div class="flex space-x-2">
-    <a href="{{ route('admin.users.edit', $user->id) }}"
-       class="text-blue-600 hover:text-blue-800">
+<div class="flex items-center space-x-2">
+    <x-wire-button href="{{route('admin.users.edit', $user)}}" blue xs>
         <i class="fa-solid fa-pen-to-square"></i>
-    </a>
+    </x-wire-button>
 
-    <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST"
-          onsubmit="return confirm('¿Seguro que deseas eliminar este usuario?')">
+    <form action="{{ route('admin.users.destroy', $user) }}" method="POST" class="delete-form">
         @csrf
         @method('DELETE')
-        <button type="submit" class="text-red-600 hover:text-red-800">
+        <x-wire-button type='submit' red xs>
             <i class="fa-solid fa-trash"></i>
-        </button>
+        </x-wire-button>
     </form>
 </div>

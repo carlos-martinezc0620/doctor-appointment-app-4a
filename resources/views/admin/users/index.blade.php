@@ -1,14 +1,19 @@
-<x-admin-layout title="Usuarios | ClinicConnect" :breadcrumbs="[
-    ['name' => 'Dashboard', 'href' => route('admin.dashboard')],
-    ['name' => 'Usuarios'],
+<x-admin-layout title="Roles | Simify"
+                :breadcrumbs="[
+    [
+        'name' => 'Dashboard',
+        'href' => route('admin.dashboard'),
+    ],
+    [
+        'name' => 'Users',
+    ]
 ]">
     <x-slot name="action">
         <x-wire-button blue href="{{ route('admin.users.create') }}">
-            <i class="fa-solid fa-plus"></i>
-            Nuevo
+            <i class="fa-solid fa-plus"></i> Nuevo
         </x-wire-button>
     </x-slot>
 
-    <livewire:admin.datatables.user-table />
+    @livewire('admin.datatables.user-table')
 
 </x-admin-layout>

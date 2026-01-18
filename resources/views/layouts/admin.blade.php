@@ -1,7 +1,6 @@
 @props([
     'title' => config('app.name', 'Laravel'),
-    'breadcrumbs' => [],
-])
+    'breadcrumbs' => []])
 
     <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -18,75 +17,61 @@
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    <script src="https://kit.fontawesome.com/1f2d486d88.js" crossorigin="anonymous"></script>
 
-    <!-- WireUI -->
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/e9e74fca35.js" crossorigin="anonymous"></script>
+
+    <!-- Sweet Alert 2-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- WireUI --}}
     <wireui:scripts />
 
     <!-- Styles -->
     @livewireStyles
 </head>
-<body class="font-sans antialiased bg-blue-50">
+<body class="font-sans antialiased bg-gray-50">
 
-{{-- Navbar y sidebar --}}
 @include('layouts.includes.admin.navigation')
+
 @include('layouts.includes.admin.sidebar')
 
-{{-- Contenido principal --}}
 <div class="p-4 sm:ml-64">
+    <!-- Añadiendo margen superior-->
+    <div class= "mt-14 flex items-center justify-between w-full">
+        @include('layouts.includes.admin.breadcrumb')
 
-    {{-- Encabezado con breadcrumbs y acción --}}
-    <div class="mt-14 flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-4">
-        {{-- Breadcrumbs --}}
-        <div>
-            @include('admin.breadcrumb', ['breadcrumbs' => $breadcrumbs])
-        </div>
-
-        {{-- Botón o acción (slot "action") --}}
         @isset($action)
-            <div class="flex-shrink-0">
+            <div>
                 {{ $action }}
             </div>
         @endisset
     </div>
-
-    {{-- Contenido de la vista --}}
-    <div class="mt-6">
-        {{ $slot }}
-    </div>
+    {{$slot}}
 </div>
-
 @stack('modals')
 
 @livewireScripts
-
 <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
-{{-- SweetAlert2 --}}
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-@if (session('success'))
+{{-- Mostrar Sweet Alert --}}
+@if (@session('swal'))
     <script>
-        Swal.fire({
-            icon: 'success',
-            title: '¡Éxito!',
-            text: "{{ session('success') }}",
-            showConfirmButton: false,
-            timer: 2500,
-            timerProgressBar: true,
-        });
+        Swal.fire(@json(session('swal')));
     </script>
 @endif
 
 <script>
-    // Buscar todos los elementos con la clase "delete-form"
-    const forms = document.querySelectorAll('.delete-form');
-
+    //Buscar todos los elementos de una clase especifica
+    forms = document.querySelectorAll('.delete-form');
     forms.forEach(form => {
-        form.addEventListener('submit', function(e) {
+        //Se pone al pendiente de cualquier accion submit
+        form.addEventListener('submit', function(e){
+            //Evita que se envie
             e.preventDefault();
             Swal.fire({
                 title: "¿Estás seguro?",
-                text: "No podrás revertir esto.",
+                text: "No podrás revertir esto!",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
@@ -94,38 +79,13 @@
                 confirmButtonText: "Sí, eliminar",
                 cancelButtonText: "Cancelar"
             }).then((result) => {
-                if (result.isConfirmed) {
+                if(result.isConfirmed){
+                    //Borrar el registro
                     form.submit();
                 }
-            });
-        });
-    });
+            })
+        })
+    })
 </script>
-
-
-@if (session('error'))
-    <script>
-        Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: "{{ session('error') }}",
-            showConfirmButton: true,
-        });
-    </script>
-@endif
-
-@if (session('swal'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                icon: '{{ session('swal.icon') }}',
-                title: '{{ session('swal.title') }}',
-                text: '{{ session('swal.text') }}',
-                showConfirmButton: true,
-                confirmButtonColor: '#3085d6'
-            });
-        });
-    </script>
-@endif
 </body>
 </html>
