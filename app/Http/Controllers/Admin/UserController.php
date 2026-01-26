@@ -88,7 +88,7 @@ class UserController extends Controller
 
         //Si el usuario quiere editar su contraseña, que lo guarde
         if ($request->filled('password')) {
-            $user->password = bycrypt($request['password']);
+            $user->password = bcrypt($request['password']);
             $user->save();
         }
 
